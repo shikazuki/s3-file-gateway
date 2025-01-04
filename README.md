@@ -23,9 +23,9 @@ $ terraform apply -target=module.storage-gateway-instance
 Get activation key in bastion server.
 ```shell
 # ipaddress is private ipv4 of the storage gateway instance. 
-$ curl "http://10.0.1.xxx/?activationRegion=ap-northeast-1&no_redirect"
+ec2-user $ curl "http://10.0.1.xxx/?activationRegion=ap-northeast-1&no_redirect"
 ACTIVATION_KEY
-$ aws ssm put-parameter --name /s3fg-instance/filegateway/activation_key --value ACTIVATION_KEY --overwrite
+local    $ aws ssm put-parameter --name /s3fg-instance/filegateway/activation_key --value ACTIVATION_KEY --overwrite
 ```
 
 Create storage gateway
