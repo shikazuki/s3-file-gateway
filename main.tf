@@ -25,3 +25,13 @@ module "storage_gateway_instance" {
   instance_type    = "m4.xlarge"
   root_volume_size = 80
 }
+
+# Storage Gateway
+module "storage_gateway" {
+  source = "./modules/storage-gateway"
+
+
+  activation_key = module.storage_gateway_instance.activation_key
+  bucket_name    = "s3fg-shared-bucket"
+  name           = "s3fg"
+}
