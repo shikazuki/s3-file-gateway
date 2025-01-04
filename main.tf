@@ -34,4 +34,6 @@ module "storage_gateway" {
   activation_key = module.storage_gateway_instance.activation_key
   bucket_name    = "s3fg-shared-bucket"
   name           = "s3fg"
+
+  depends_on = [module.bastion_instance, module.storage_gateway_instance]
 }
