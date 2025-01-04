@@ -1,6 +1,6 @@
 
 resource "aws_storagegateway_gateway" "main" {
-  activation_key = var.activation_key
+  activation_key     = var.activation_key
   gateway_name       = var.name
   gateway_timezone   = "GMT"
   gateway_type       = "FILE_S3"
@@ -20,7 +20,7 @@ data "aws_storagegateway_local_disk" "main" {
 resource "aws_storagegateway_cache" "main" {
   gateway_arn = aws_storagegateway_gateway.main.arn
   # aws_storage gateway_local_diskからディスクIDを設定
-  disk_id     = data.aws_storagegateway_local_disk.main.id
+  disk_id = data.aws_storagegateway_local_disk.main.id
 }
 
 # shared bucket
@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "main" {
-  name = "file-share-role"
+  name               = "file-share-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 

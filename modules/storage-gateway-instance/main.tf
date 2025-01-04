@@ -65,10 +65,10 @@ resource "aws_ssm_parameter" "keypair_pub" {
 
 # インスタンス設定
 resource "aws_instance" "default" {
-  ami                  = var.ami
-  instance_type        = var.instance_type
-  key_name             = aws_key_pair.main.key_name
-  subnet_id            = var.subnet_id
+  ami           = var.ami
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.main.key_name
+  subnet_id     = var.subnet_id
   vpc_security_group_ids = [
     aws_security_group.main.id
   ]
@@ -99,9 +99,9 @@ resource "aws_volume_attachment" "sdf" {
 }
 
 resource "aws_ssm_parameter" "activation_key" {
-  name = "/${var.name}/filegateway/activation_key"
-  value = "password"
-  type = "SecureString"
+  name        = "/${var.name}/filegateway/activation_key"
+  value       = "password"
+  type        = "SecureString"
   description = "activation_key for s3 file gateway"
 
   lifecycle {
