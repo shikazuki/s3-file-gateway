@@ -38,7 +38,7 @@ resource "aws_security_group" "main" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    description = "external-all"
+    description = "external all"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -79,13 +79,6 @@ resource "aws_instance" "default" {
   }
   tags = {
     Name = var.name
-  }
-
-  # AMIやインスタンスタイプの変更でサーバーが作り直しにならないように設定
-  lifecycle {
-    ignore_changes = [
-      instance_type
-    ]
   }
 }
 

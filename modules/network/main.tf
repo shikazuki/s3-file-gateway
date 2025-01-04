@@ -38,6 +38,8 @@ resource "aws_subnet" "pub_a_1" {
   }
 }
 
+### Gateway ###
+
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
   tags = {
@@ -64,44 +66,44 @@ resource "aws_nat_gateway" "nat_a_1" {
 
 ### Route Table ###
 
-resource "aws_route_table" "pub_a_1" {
+resource "aws_route_table" "public_table" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name = "${var.prefix}-pub_a_1"
   }
 }
 
-resource "aws_route_table" "pri_a_2" {
+resource "aws_route_table" "private_table" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name = "${var.prefix}-pri_a_2"
   }
 }
 
-resource "aws_route" "pub_igw_a_1" {
+resource "aws_route" "igw_route" {
   destination_cidr_block = "0.0.0.0/0"
-  route_table_id         = aws_route_table.pub_a_1.id
+  route_table_id         = aws_route_table.public_table.id
   gateway_id             = aws_internet_gateway.main.id
 }
 
-resource "aws_route" "nat_a_2" {
+resource "aws_route" "nat_route" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat_a_1.id
-  route_table_id         = aws_route_table.pri_a_2.id
+  route_table_id         = aws_route_table.private_table.id
 }
 
-resource "aws_route_table_association" "pub_a_1" {
+resource "aws_route_table_association" "public_association" {
   subnet_id      = aws_subnet.pub_a_1.id
-  route_table_id = aws_route_table.pub_a_1.id
+  route_table_id = aws_route_table.public_table.id
 }
 
-resource "aws_route_table_association" "pri_a_2" {
-  subnet_id      = aws_subnet.pri_a_2.id
-  route_table_id = aws_route_table.pri_a_2.id
-}
 
-resource "aws_route_table_association" "pri_a_1" {
+resource "aws_route_table_association" "private_association_a_1" {
   subnet_id      = aws_subnet.pri_a_1.id
-  route_table_id = aws_route_table.pri_a_2.id
+  route_table_id = aws_route_table.private_table.id
 }
 
+resource "aws_route_table_association" "private_association_a_2" {
+  subnet_id      = aws_subnet.pri_a_2.id
+  route_table_id = aws_route_table.private_table.id
+}
